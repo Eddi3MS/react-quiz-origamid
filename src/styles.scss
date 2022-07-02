@@ -1,0 +1,89 @@
+.button {
+  --background-color: white;
+  --border-color: linear-gradient(45deg, #202023, red);
+  --border-width: 0.2em;
+  --edge-size: 0.5em;
+
+  width: 200px;
+  height: 50px;
+  font-weight: bold;
+
+  margin-top: 3rem;
+  cursor: pointer;
+  background: var(--background-color);
+  padding: 0.5em 1.5em;
+  border: 0;
+  position: relative;
+  isolation: isolate;
+  display: inline-grid;
+  place-content: center;
+  clip-path: polygon(
+    var(--edge-size) 0%,
+    100% 0,
+    100% calc(100% - var(--edge-size)),
+    calc(100% - var(--edge-size)) 100%,
+    0 100%,
+    0% var(--edge-size)
+  );
+  transition: color 250ms;
+}
+
+button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--border-color);
+  z-index: -2;
+}
+
+button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--background-color);
+  z-index: -1;
+  clip-path: polygon(
+    // top left 1
+    var(--border-width) calc(var(--edge-size) + var(--border-width) * 0.5),
+    // top left 2
+    calc(var(--edge-size) + var(--border-width) * 0.5) var(--border-width),
+    // top right
+    calc(100% - var(--border-width)) var(--border-width),
+    //bottom right - 1
+    calc(100% - var(--border-width))
+      calc(100% - calc(var(--edge-size) + var(--border-width) * 0.5)),
+    // bottom right - 2
+    calc(100% - calc(var(--edge-size) + var(--border-width) * 0.5))
+      calc(100% - var(--border-width)),
+    // bottom left
+    calc(var(--border-width)) calc(100% - var(--border-width))
+  );
+  transition: clip-path 500ms;
+}
+
+button:hover {
+  color: white;
+}
+
+button:hover::after {
+  // clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%);
+
+  clip-path: polygon(
+    // top left 1
+    calc(100% - var(--border-width))
+      calc(100% - calc(var(--edge-size) + var(--border-width) * 0.5)),
+    // top left 2
+    calc(100% - var(--border-width)) var(--border-width),
+    // top right
+    calc(100% - var(--border-width)) var(--border-width),
+    //bottom right - 1
+    calc(100% - var(--border-width))
+      calc(100% - calc(var(--edge-size) + var(--border-width) * 0.5)),
+    // bottom right - 2
+    calc(100% - calc(var(--edge-size) + var(--border-width) * 0.5))
+      calc(100% - var(--border-width)),
+    // bottom left
+    calc(100% - calc(var(--edge-size) + var(--border-width) * 0.5))
+      calc(100% - var(--border-width))
+  );
+}
